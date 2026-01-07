@@ -8,4 +8,4 @@ RUN unzip viking.zip
 RUN cp -rvf viking/* .
 RUN rm -rf viking viking.zip
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
-EXPOSE 80
+EXPOSE 80 443
