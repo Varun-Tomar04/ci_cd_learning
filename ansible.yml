@@ -14,7 +14,14 @@
 
 #The correct way to implement the playbook is as below
 - hosts: node
+  gather_facts: false
   tasks:
+  #can be removed since files are already present on ansible host from jenkins
+    # - name: Copy Service manifest to Ansible host
+    #   copy:
+    #     src: Service.yml
+    #     dest: /home/ubuntu/Service.yml
+
     - name: Render Deployment manifest
       template:
         src: Deployment.yml.j2
@@ -27,4 +34,5 @@
       loop:
         - Service.yml
         - Deployment.yml
+
 
