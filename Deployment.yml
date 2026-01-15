@@ -14,7 +14,7 @@ spec:
       spec:
        containers:
         - name: webapp
-          image: shikhardocker/pipeline-demo
+          image: varunt0403/pipeline-demo
           imagePullPolicy: Always
           ports:
           - containerPort: 80
