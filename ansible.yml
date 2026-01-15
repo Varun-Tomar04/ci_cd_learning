@@ -1,38 +1,38 @@
 #Below is the playbook defined as per course
-# - hosts: node
-#   become: true
-#   tasks:
-#      - name: delete old deployment
-#        command: kubectl delete -f /home/ubuntu/Deployment.yml
-#      - name: delete old service
-#        command: kubectl delete -f /home/ubuntu/Service.yml
-#      - name: create new deployment
-#        command: kubectl apply -f /home/ubuntu/Deployment.yml
-#      - name: create new service
-#        command: kubectl apply -f /home/ubuntu/Service.yml
+- hosts: node
+  become: true
+  tasks:
+     - name: delete old deployment
+       command: kubectl delete -f /home/ubuntu/Deployment.yml
+     - name: delete old service
+       command: kubectl delete -f /home/ubuntu/Service.yml
+     - name: create new deployment
+       command: kubectl apply -f /home/ubuntu/Deployment.yml
+     - name: create new service
+       command: kubectl apply -f /home/ubuntu/Service.yml
 
 
 #The correct way to implement the playbook is as below
-- hosts: node
-  gather_facts: false
-  tasks:
-  #can be removed since files are already present on ansible host from jenkins
-    # - name: Copy Service manifest to Ansible host
-    #   copy:
-    #     src: Service.yml
-    #     dest: /home/ubuntu/Service.yml
+# - hosts: node
+#   gather_facts: false
+#   tasks:
+#   #can be removed since files are already present on ansible host from jenkins
+#     # - name: Copy Service manifest to Ansible host
+#     #   copy:
+#     #     src: Service.yml
+#     #     dest: /home/ubuntu/Service.yml
 
-    - name: Render Deployment manifest
-      template:
-        src: Deployment.yml.j2
-        dest: /home/ubuntu/Deployment.yml
+#     - name: Render Deployment manifest
+#       template:
+#         src: Deployment.yml.j2
+#         dest: /home/ubuntu/Deployment.yml
 
-    - name: Apply Kubernetes manifests
-      kubernetes.core.k8s:
-        state: present
-        src: "/home/ubuntu/{{ item }}"
-      loop:
-        - Service.yml
-        - Deployment.yml
+#     - name: Apply Kubernetes manifests
+#       kubernetes.core.k8s:
+#         state: present
+#         src: "/home/ubuntu/{{ item }}"
+#       loop:
+#         - Service.yml
+#         - Deployment.yml
 
 
